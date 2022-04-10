@@ -3,13 +3,13 @@ const request = indexedDB.open('budget-tracker', 1)
 
 request.onupgradeneeded = function(event){
     const db = event.target.result
-    db.createObjectStore('new_budget', {autoIncrement: true})
+    db.createObjectStore('new_transaction', {autoIncrement: true})
 }
 
 request.onsuccess = function(event){
     db = event.target.result
     if(navigator.onLine){
-        uploadBudget()
+        uploadTransaction()
     }
 }
 
@@ -17,15 +17,15 @@ request.onerror = function(event){
     console.log(event.target.errorCode)
 }
 function saveRecord(record){
-    const transaction = db.transaction(['new_budget'], 'readwrite')
-    const budgetObjectStore = transaction.objectStore('new_budget')
+    const transaction = db.transaction(['new_transaction'], 'readwrite')
+    const budgetObjectStore = transaction.objectStore('new_transaction')
     budgetObjectStore.add(record)
 }
 
-function uploadBudget(){
-    const transaction = db.transaction(['new_budget'], 'readwrite')
+function uploadTransaction(){
+    const transaction = db.transaction(['new_transaction'], 'readwrite')
 
-    const budgetObjectStore = transaction.objectStore('new_budget')
+    const budgetObjectStore = transaction.objectStore('new_transaction')
 
     const getAll = budgetObjectStore.getAll()
     getAll.onsuccess = function(){
@@ -43,11 +43,11 @@ function uploadBudget(){
                 if(serverResponse.message){
                     throw new Error(serverResponse)
                 }
-                const transaction = db.transaction(['new_budget'], 'readwrite')
-                const budgetObjectStore = transaction.objectStore('new_budget')
+                const transaction = db.transaction(['new_transaction'], 'readwrite')
+                const budgetObjectStore = transaction.objectStore('new_transaction')
                 budgetObjectStore.clear()
 
-                alert('All saved budgets have been submitted.')
+                alert('All saved transactions have been submitted.')
             })
             .catch(err=> {
                 console.log(err)
@@ -56,4 +56,4 @@ function uploadBudget(){
     }
 }
 
-window.addEventListener('online', uploadBudget)
+window.addEventListener('online', uploadTransaction)
