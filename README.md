@@ -11,7 +11,9 @@
   
   <a name="description"></a>
   ## Description
-  An application you can use to track your transactions both on and offline. Mimics a native mobile app.
+  An application you can use to track your transactions both on and offline. PWA that mimics a native mobile app.
+
+  Deployed: https://native-budget-tracker.herokuapp.com/
 
   <a name="install"></a>
   ## Installation
